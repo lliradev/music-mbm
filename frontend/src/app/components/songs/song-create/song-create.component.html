@@ -1,0 +1,44 @@
+<mat-card>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="title" placeholder="Song Title" required>
+      <mat-error *ngIf="form.controls.title.invalid && form.controls.title.touched">
+        Please enter a song title
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="artist" placeholder="Song Artist" required>
+      <mat-error *ngIf="form.controls.artist.invalid && form.controls.artist.touched">
+        Please enter a song artist
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="album" placeholder="Song Album" required>
+      <mat-error *ngIf="form.controls.album.invalid && form.controls.album.touched">
+        Please enter a song album
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" formControlName="release_date" placeholder="Song release date" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="form.controls.release_date.invalid && form.controls.release_date.touched">
+        Please enter a song release date
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="genre" placeholder="Song Musical Genre" required>
+      <mat-error *ngIf="form.controls.genre.invalid && form.controls.genre.touched">
+        Please enter a song musical genre
+      </mat-error>
+    </mat-form-field>
+
+    <input type="hidden" formControlName="_id">
+    <button mat-raised-button color="accent" type="submit">Save Song</button>
+  </form>
+</mat-card>
