@@ -38,6 +38,14 @@
       </mat-error>
     </mat-form-field>
 
+    <div>
+      <a mat-raised-button (click)="image.click()" type="button">Pick Image</a>
+      <input #image type="file" id="image" (change)="onSelectedFile($event)" accept="image/*">
+    </div>
+    <!-- SHOW IMAGE -->
+    <img [src]="thumbnail" class="center responsive-img">
+    <br>
+
     <input type="hidden" formControlName="_id">
     <button mat-raised-button color="accent" type="submit">Save Song</button>
   </form>

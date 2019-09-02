@@ -1,1 +1,7 @@
-<mat-toolbar color="primary">MyMusic</mat-toolbar>
+<mat-toolbar color="primary">
+  <span><a routerLink="/">MyMusic</a></span>
+  <span class="spacer"></span>
+  <ul>
+    <li><a mat-button routerLink="/create" routerLinkActive="mat-accent">New Song</a></li>
+  </ul>
+</mat-toolbar>

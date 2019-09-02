@@ -7,10 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SongService {
-  selected: Song;
   songs: Song[] = [];
-  readonly API = '/songs';
-  base_url = environment.URL_API + this.API;
+  base_url = environment.URL_API + '/songs';
 
   constructor(private http: HttpClient) { }
 

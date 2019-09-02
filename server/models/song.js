@@ -4,7 +4,7 @@ const songSchema = new Schema({
   title: {
     type: String,
     required: 'Song title can\'t be empty!'
-    // trim: true
+    // trim: true; eliminar espacios en blanco
   },
   artist: {
     type: String,
@@ -22,6 +22,10 @@ const songSchema = new Schema({
   genre: {
     type: String,
     required: 'Song genre can\'t be empty!'
+  },
+  imagePath: {
+    type: String,
+    required: 'Song Image can\'t be empty!'
   }
 },
   {

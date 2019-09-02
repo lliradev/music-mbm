@@ -7,10 +7,11 @@ const {
   update,
   deleteSong
 } = require('../controllers/song.controller');
+const upload = require('../libs/multer');
 
 router.route('/')
   .get(getSongs)
-  .post(save)
+  .post(upload.single('image'), save)
 
 router.route('/:id')
   .get(getSong)

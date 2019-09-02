@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 
 // Initializations
 const app = express();
@@ -17,5 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use('/api/songs', require('./routes/song.routes'));
+
+// Store public
+app.use('/uploads', express.static(path.resolve('uploads')));
 
 module.exports = app;

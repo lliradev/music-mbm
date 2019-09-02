@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SongService } from 'src/app/services/song.service';
+import { Song } from 'src/app/models/song';
 
 @Component({
   selector: 'app-song-list',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SongListComponent implements OnInit {
 
-  constructor() { }
+  constructor(public songService: SongService) { }
 
   ngOnInit() {
+    this.getSongs();
   }
 
-}
+  getSongs() {
+    this.songService.getSongs().subscribe(res => {
+      this.songService.songs = res as Song[];
+    })
+  }
+
+}//end class

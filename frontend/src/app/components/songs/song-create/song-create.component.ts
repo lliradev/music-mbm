@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./song-create.component.css']
 })
 export class SongCreateComponent implements OnInit {
+  thumbnail: string = '';
   isLoading = false;
   form: FormGroup;
 
@@ -31,11 +32,24 @@ export class SongCreateComponent implements OnInit {
           genre: res.genre,
           _id: res._id
         });
+        this.thumbnail = res.imagePath;
       });
     } else {
       console.log('Create');
     }
     this.initForm();
+  }
+
+  onSelectedFile(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.form.get('image').setValue(file);
+      var reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.thumbnail = event.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
   }
 
   onSubmit() {
@@ -45,16 +59,17 @@ export class SongCreateComponent implements OnInit {
     fd.append('album', this.form.get('album').value);
     fd.append('release_date', this.form.get('release_date').value);
     fd.append('genre', this.form.get('genre').value);
+    fd.append('image', this.form.get('image').value);
     const _id = this.form.get('_id').value;
     if (_id) {
       this.songService.putSong(fd, _id).subscribe(res => {
         this.form.reset();
-        //this.router.navigate(['/songs']);
+        this.router.navigate(['/songs']);
       });
     } else {
       this.songService.postSong(fd).subscribe(res => {
         this.form.reset();
-        //this.router.navigate(['/songs']);
+        this.router.navigate(['/songs']);
       });
     }
   }
@@ -66,7 +81,8 @@ export class SongCreateComponent implements OnInit {
       artist: ['', Validators.required],
       album: ['', Validators.required],
       release_date: [null],
-      genre: ['', Validators.required]
+      genre: ['', Validators.required],
+      image: ['', Validators.required]
     });
   }
 

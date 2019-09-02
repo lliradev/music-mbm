@@ -1,5 +1,7 @@
 const Song = require('../models/song');
 const songCtrl = {};
+const { unlink } = require('fs-extra');
+const path = require('path');
 
 songCtrl.getSongs = async (req, res) => {
   const songs = await Song.find();
@@ -9,11 +11,7 @@ songCtrl.getSongs = async (req, res) => {
 songCtrl.save = async (req, res) => {
   const { title, artist, album, release_date, genre } = req.body;
   const song = new Song({
-    title,
-    artist,
-    album,
-    release_date,
-    genre
+    title, artist, album, release_date, genre, imagePath: req.file.path
   });
   await song.save();
   res.json({ message: 'Song saved.' })
@@ -28,18 +26,20 @@ songCtrl.update = async (req, res) => {
   const { id } = req.params;
   const { title, artist, album, release_date, genre } = req.body;
   const song = {
-    title,
-    artist,
-    album,
-    release_date,
-    genre
+    title, artist, album, release_date, genre
   };
+  if (req.file) {
+    imagePath = updatedImage;
+  }
   await Song.findByIdAndUpdate(id, { $set: song }, { new: true });
   res.json({ message: 'Song updated.' });
 };
 
 songCtrl.deleteSong = async (req, res) => {
-  await Song.findByIdAndDelete(req.params.id);
+  const song = await Song.findByIdAndDelete(req.params.id);
+  if (song) {
+    await unlink(path.resolve(song.imagePath));
+  }
   res.json('Song deleted.');
 };
 
