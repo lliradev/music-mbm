@@ -6,7 +6,8 @@ import { SongCreateComponent } from './components/songs/song-create/song-create.
 
 const routes: Routes = [
   { path: '', component: SongListComponent },
-  { path: 'create', component: SongCreateComponent }
+  { path: 'create', component: SongCreateComponent },
+  { path: 'edit/:_id', component: SongCreateComponent }
 ];
 
 @NgModule({

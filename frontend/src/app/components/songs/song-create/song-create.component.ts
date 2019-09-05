@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SongService } from 'src/app/services/song.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-song-create',
@@ -17,7 +18,8 @@ export class SongCreateComponent implements OnInit {
     public songService: SongService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -64,12 +66,18 @@ export class SongCreateComponent implements OnInit {
     if (_id) {
       this.songService.putSong(fd, _id).subscribe(res => {
         this.form.reset();
-        this.router.navigate(['/songs']);
+        this.snackBar.open('Song updated!', 'Success', {
+          duration: 4000
+        });
+        this.router.navigate(['/']);
       });
     } else {
       this.songService.postSong(fd).subscribe(res => {
         this.form.reset();
-        this.router.navigate(['/songs']);
+        this.snackBar.open('Song saved!', 'Success', {
+          duration: 4000
+        });
+        this.router.navigate(['/']);
       });
     }
   }
